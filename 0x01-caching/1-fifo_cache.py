@@ -1,32 +1,49 @@
-#!/usr/bin/env python3
-""" FIFO caching """
+#!/usr/bin/python3
+""" 1. FIFO caching
+"""
 
-BaseCaching = __import__('base_caching').BaseCaching
+from collections import deque
+
+BaseCaching = __import__("base_caching").BaseCaching
 
 
 class FIFOCache(BaseCaching):
-    """ Class FIFOCache"""
+    """ class FIFOCache that inherits from BaseCaching and is a caching system
+    """
 
     def __init__(self):
-        """Constructor"""
+        """ Init
+        """
         super().__init__()
-        self.queue = []
+        self.queue = deque()
 
     def put(self, key, item):
-        """Assign into dictionary using FIFO"""
+        """ Must assign to the dictionary self.cache_data the item value for
+        the key key.
+        """
         if key and item:
             if key in self.cache_data:
-                self.cache_data[key] = item
-                return
-            elif len(self.cache_data) >= self.MAX_ITEMS:
-                first = self.queue.pop(0)
-                del self.cache_data[first]
-                print("DISCARD: {}".format(first))
+                self.queue.remove(key)
+            elif self.is_full():
+                self.evict()
             self.queue.append(key)
-        return None
+            self.cache_data[key] = item
 
     def get(self, key):
-        """Return value of cache_data linked to key"""
-        if key in self.cache_data:
-            return self.cache_data[key]
-        return None
+        """ Must return the value in self.cache_data linked to key.
+        """
+        return self.cache_data.get(key, None)
+
+    def is_full(self):
+        """ If the number of items in self.cache_data is higher that
+        BaseCaching.MAX_ITEMS
+        """
+        return len(self.cache_data) >= self.MAX_ITEMS
+
+    def evict(self):
+        """ you must print DISCARD: with the key discarded and following by a
+        new line
+        """
+        popped = self.queue.popleft()
+        del self.cache_data[popped]
+        print("DISCARD: " + str(popped))
