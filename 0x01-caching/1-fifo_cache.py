@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """ FIFO caching """
-BaseCaching = __import__('base_caching').BasicCache
+
+BaseCaching = __import__('base_caching').BaseCaching
 
 
 class FIFOCache(BaseCaching):
@@ -9,7 +10,7 @@ class FIFOCache(BaseCaching):
     def __init__(self):
         """Constructor"""
         super().__init__()
-        self.deque = []
+        self.queue = []
 
     def put(self, key, item):
         """Assign into dictionary using FIFO"""
@@ -17,11 +18,11 @@ class FIFOCache(BaseCaching):
             if key in self.cache_data:
                 self.cache_data[key] = item
                 return
-            if len(self.cache_data) >= self.MAX_ITEMS:
-                first = self.deque.pop(0)
+            elif len(self.cache_data) >= self.MAX_ITEMS:
+                first = self.queue.pop(0)
                 del self.cache_data[first]
                 print("DISCARD: {}".format(first))
-            self.deque.append(key)
+            self.queue.append(key)
         return None
 
     def get(self, key):
