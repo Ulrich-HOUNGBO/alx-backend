@@ -23,8 +23,8 @@ class LIFOCache(BaseCache):
                 self.queue.remove(key)
             elif self.is_full():
                 self.evict()
-        self.queue.append(key)
-        self.cache_data[key] = item
+            self.queue.append(key)
+            self.cache_data[key] = item
 
     def get(self, key):
         """Get an item by key"""
