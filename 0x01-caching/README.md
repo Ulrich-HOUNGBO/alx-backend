@@ -37,6 +37,6 @@ At the end of this project, you are expected to be able to [explain to anyone](h
 * [x] 4. MRU Caching
 * [x] 5. LFU Caching
 
-## Software engineer
+
 ## Software engineer
 * **Ulrich HOUNGBO** - [Ulrich-HOUNGBO](https://github.com/Ulrich-HOUNGBO)
