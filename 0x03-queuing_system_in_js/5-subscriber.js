@@ -10,13 +10,13 @@ client.on("error", (error) => {
     console.log('Redis client connected to the server')
 });
 
-client.subscribe('holberton school channelient');
+client.subscribe('holberton school channel');
 
 client.on('message', (channel, message) => {
 
     console.log(message);
     if (message === 'KILL_SERVER') {
         client.unsubscribe(channel);
-        proocecess.exit(0;;)
+        process.exit(0);
     }
-})
+});
